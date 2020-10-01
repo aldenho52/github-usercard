@@ -171,7 +171,7 @@ function cardMaker(userData) {
       }
     })
 
-    new GitHubCalendar(".calendar", "aldenho52")
+    GitHubCalendar(".calendar", `${userData.login}`);
 
   return card
 }
