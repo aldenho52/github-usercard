@@ -9,7 +9,7 @@ console.log(axios)
 
 axios.get('https://api.github.com/users/aldenho52')
   .then(res => {
-    // console.log(res)
+    console.log(res)
     const userData = res.data
     const card = cardMaker(userData)
     const cards = document.querySelector('.cards')
@@ -37,7 +37,6 @@ axios.get('https://api.github.com/users/aldenho52')
     })
   })
 
-  console.log(followersArray)
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -91,6 +90,7 @@ axios.get('https://api.github.com/users/aldenho52')
     </div>
 */
 
+
 function cardMaker(userData) {
 
   // Instantiating the elements
@@ -135,6 +135,42 @@ function cardMaker(userData) {
   following.textContent = userData.following
   bio.textContent = userData.bio
 
+    // expand card extra info
+    const extraInfo = document.createElement('div')
+    const id = document.createElement('p')
+    const repos = document.createElement('p')
+    const reposURL = document.createElement('p')
+    const createdAt = document.createElement('p')
+
+  
+    extraInfo.appendChild(id)
+    extraInfo.appendChild(repos)
+    extraInfo.appendChild(reposURL)
+    extraInfo.appendChild(createdAt)
+    card.appendChild(extraInfo)
+
+    extraInfo.classList.add('extraInfo')
+
+    id.textContent = `id: ${userData.id}`
+    repos.textContent = `public repos: ${userData.public_repos}`
+    reposURL.textContent = `repos URL: ${userData.repos_url}`
+    createdAt.textContent = `account created on: ${userData.created_at}`
+  
+    // expand and close button
+    const button = document.createElement('button')
+    button.textContent = 'Click to Expand'
+    button.classList.add('button')
+    card.appendChild(button)
+
+    button.addEventListener('click', event => {
+      extraInfo.classList.toggle('card-open')
+      if (button.textContent === 'Click to Expand') {
+        button.textContent = 'Click to Close'
+      } else {
+        button.textContent = 'Click to Expand'
+      }
+    })
+
   return card
 }
 // ### Stretch Goals
@@ -146,12 +182,12 @@ function followersList (user) {
 axios.get(`https://api.github.com/users/${user}/followers`)
   .then(res => {
     const followers = res.data
-    console.log(followers)
+    // console.log(followers)
     return followers
   })
   .then(res => {
     const array = res
-    console.log(array)
+    // console.log(array)
     array.forEach(data => {
       axios.get(`https://api.github.com/users/${data.login}`)
       const card = cardMaker(data)
@@ -165,8 +201,6 @@ axios.get(`https://api.github.com/users/${user}/followers`)
   
 }
 
-// STRETCH SEE BELOW
-
 followersList('aldenho52')   
 //  Junior Dugue and Jahteo, my 2 followers..
 
@@ -174,6 +208,8 @@ followersList('tetondan')
 // tetondan has much more followers than me..
 
 // * Look into adding more info as an expanding card. You will need to create some new CSS and a button that expands and contracts the card. 
+
+
 
 // * Look into adding your GitHub contribution graph. There are a number of different ways of doing this, [this Stack Overflow discussion](https://stackoverflow.com/questions/34516592/embed-github-contributions-graph-in-website) will get you started.
 

@@ -95,6 +95,7 @@ body {
   width: 100%;
   padding: 20px;
   display: flex;
+  flex-wrap: wrap;
   border-radius: 5px;
   box-shadow: 0 1px 6px -2px #000;
   background-color: #FFF;
@@ -125,3 +126,21 @@ body {
 
 
 
+.button {
+  height: 1%;
+}
+
+.extraInfo {
+  height: 0px;
+  overflow: hidden;
+}
+.card-open {
+  height: 100px;
+  margin-top: 30px;
+  transition-duration: 500ms;
+}
+
+.card-info {
+  display: block;
+  width: 50%;
+}
