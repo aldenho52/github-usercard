@@ -9,7 +9,7 @@ console.log(axios)
 
 axios.get('https://api.github.com/users/aldenho52')
   .then(res => {
-    console.log(res)
+    // console.log(res)
     const userData = res.data
     const card = cardMaker(userData)
     const cards = document.querySelector('.cards')
@@ -23,10 +23,10 @@ axios.get('https://api.github.com/users/aldenho52')
 
   const followersArray = ['JuniorDugue', 'tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
   
-  followersArray.forEach( user => {
+  followersArray.forEach(user => {
     axios.get(`https://api.github.com/users/${user}`)
     .then(res => {
-      console.log(res)
+      // console.log(res)
       const userData = res.data
       const card = cardMaker(userData)
       const cards = document.querySelector('.cards')
@@ -36,6 +36,8 @@ axios.get('https://api.github.com/users/aldenho52')
       console.log(err)
     })
   })
+
+  console.log(followersArray)
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -68,9 +70,6 @@ axios.get('https://api.github.com/users/aldenho52')
     luishrd
     bigknell
 */
-
-
-
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -138,12 +137,44 @@ function cardMaker(userData) {
 
   return card
 }
+// ### Stretch Goals
 
-/*
-  List of LS Instructors Github username's:
-    tetondan
-    dustinmyers
-    justsml
-    luishrd
-    bigknell
-*/
+// * Instead of manually creating a list of followers, do it programmatically. Create a function that requests the followers data from the API after it has received your data and create a card for each of your followers. Hint: you can chain promises.
+
+function followersList (user) {
+
+axios.get(`https://api.github.com/users/${user}/followers`)
+  .then(res => {
+    const followers = res.data
+    console.log(followers)
+    return followers
+  })
+  .then(res => {
+    const array = res
+    console.log(array)
+    array.forEach(data => {
+      axios.get(`https://api.github.com/users/${data.login}`)
+      const card = cardMaker(data)
+      const cards = document.querySelector('.cards')
+      cards.appendChild(card)
+    })
+  })
+  .catch(err => {
+    console.log(err)
+  })
+  
+}
+
+// STRETCH SEE BELOW
+
+followersList('aldenho52')   
+//  Junior Dugue and Jahteo, my 2 followers..
+
+followersList('tetondan')  
+// tetondan has much more followers than me..
+
+// * Look into adding more info as an expanding card. You will need to create some new CSS and a button that expands and contracts the card. 
+
+// * Look into adding your GitHub contribution graph. There are a number of different ways of doing this, [this Stack Overflow discussion](https://stackoverflow.com/questions/34516592/embed-github-contributions-graph-in-website) will get you started.
+
+// Note: Just a reminder the stretch goals are just extra practice using the tools we have learned. These are not required. Only parts 1-3 are required portions of the project. If you do not get to the stretch goals, don't worry.
