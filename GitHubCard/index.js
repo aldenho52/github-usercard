@@ -171,6 +171,8 @@ function cardMaker(userData) {
       }
     })
 
+    new GitHubCalendar(".calendar", "aldenho52")
+
   return card
 }
 // ### Stretch Goals
@@ -208,8 +210,6 @@ followersList('tetondan')
 // tetondan has much more followers than me..
 
 // * Look into adding more info as an expanding card. You will need to create some new CSS and a button that expands and contracts the card. 
-
-
 
 // * Look into adding your GitHub contribution graph. There are a number of different ways of doing this, [this Stack Overflow discussion](https://stackoverflow.com/questions/34516592/embed-github-contributions-graph-in-website) will get you started.
 
