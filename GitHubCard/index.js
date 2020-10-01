@@ -3,7 +3,39 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+import axios from 'axios'
 
+console.log(axios)
+
+axios.get('https://api.github.com/users/aldenho52')
+  .then(res => {
+    console.log(res)
+    const userData = res.data
+    const card = cardMaker(userData)
+    const cards = document.querySelector('.cards')
+    cards.appendChild(card)
+
+
+  })
+  .catch(err => {
+    console.log(err)
+  })
+
+  const followersArray = ['JuniorDugue', 'tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+  
+  followersArray.forEach( user => {
+    axios.get(`https://api.github.com/users/${user}`)
+    .then(res => {
+      console.log(res)
+      const userData = res.data
+      const card = cardMaker(userData)
+      const cards = document.querySelector('.cards')
+      cards.appendChild(card)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  })
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -19,7 +51,7 @@
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
-    follow this link in your browser https://api.github.com/users/<Your github name>/followers,
+    follow this link in your browser https://api.github.com/users/aldenho52/followers,
     manually find some other users' github handles, or use the list found at the
     bottom of the page. Get at least 5 different Github usernames and add them as
     Individual strings to the friendsArray below.
@@ -28,7 +60,17 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+/*
+  List of LS Instructors Github username's:
+    tetondan
+    dustinmyers
+    justsml
+    luishrd
+    bigknell
+*/
+
+
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -49,6 +91,53 @@ const followersArray = [];
       </div>
     </div>
 */
+
+function cardMaker(userData) {
+
+  // Instantiating the elements
+  const card = document.createElement('div')
+  const image = document.createElement('img')
+  const cardInfo = document.createElement('div')
+  const name = document.createElement('h3')
+  const username = document.createElement('p')
+  const location = document.createElement('p')
+  const profile = document.createElement('p')
+  const address = document.createElement('a')
+  const followers = document.createElement('p')
+  const following = document.createElement('p')
+  const bio = document.createElement('p')
+
+  //creating heirachy
+  card.appendChild(image)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(name)
+  cardInfo.appendChild(username)
+  cardInfo.appendChild(location)
+  cardInfo.appendChild(profile)
+  cardInfo.appendChild(address)
+  cardInfo.appendChild(followers)
+  cardInfo.appendChild(following)
+  cardInfo.appendChild(bio)
+
+  // setting up class names, 
+  card.classList.add('card')
+  cardInfo.classList.add('card-info')
+  name.classList.add('name')
+  username.classList.add('username')
+
+  // attributes, text
+  image.src = userData.avatar_url
+  name.textContent = userData.name
+  username.textContent = userData.login
+  location.textContent = userData.location
+  profile.href = userData.url 
+  profile.textContent = userData.url
+  followers.textContent = userData.followers
+  following.textContent = userData.following
+  bio.textContent = userData.bio
+
+  return card
+}
 
 /*
   List of LS Instructors Github username's:
