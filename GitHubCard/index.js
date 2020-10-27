@@ -14,8 +14,6 @@ axios.get('https://api.github.com/users/aldenho52')
     const card = cardMaker(userData)
     const cards = document.querySelector('.cards')
     cards.appendChild(card)
-
-
   })
   .catch(err => {
     console.log(err)
